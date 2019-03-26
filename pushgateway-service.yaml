@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pushgateway
+  namespace: monitoring
+  labels:
+    app: pushgateway
+spec:
+  selector:
+    app: pushgateway
+  #type: NodePort
+  ports:
+    - name: pushgateway
+      protocol: TCP
+      port: 9091
+      targetPort: 9091
+      nodePort: 39091
+  type: NodePort

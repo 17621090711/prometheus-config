@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-controller
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/tcp-probe: 'true'
+    prometheus.io/tcp-probe-port: '8432'
+spec:
+  replicas: 2
+  selector:
+    name: nginx
+  template:
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

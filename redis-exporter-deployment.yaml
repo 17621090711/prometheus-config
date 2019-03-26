@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-exporter
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9121'
+      labels:
+        app: redis-exporter
+    spec:
+      containers:
+      - name: redis-exporter
+        image: oliver006/redis_exporter:latest
+        env:
+        - name: "REDIS_ADDR"
+          value: "redis-svc.qogir-sim:6379"
+        - name: "REDIS_PASSWORD"
+          value: "Redis@123456"
+#        resources:
+#          requests:
+#            cpu: 100m
+#            memory: 100Mi
+        ports:
+        - containerPort: 9121
